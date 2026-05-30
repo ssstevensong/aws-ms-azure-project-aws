@@ -1,0 +1,43 @@
+{
+  "Name": "telco_churn_clean",
+  "TableType": "EXTERNAL_TABLE",
+  "Parameters": {
+    "classification": "csv",
+    "skip.header.line.count": "1"
+  },
+  "StorageDescriptor": {
+    "Columns": [
+      { "Name": "gender", "Type": "string" },
+      { "Name": "seniorcitizen", "Type": "int" },
+      { "Name": "partner", "Type": "int" },
+      { "Name": "dependents", "Type": "int" },
+      { "Name": "tenure", "Type": "int" },
+      { "Name": "phoneservice", "Type": "int" },
+      { "Name": "multiplelines", "Type": "string" },
+      { "Name": "internetservice", "Type": "string" },
+      { "Name": "onlinesecurity", "Type": "string" },
+      { "Name": "onlinebackup", "Type": "string" },
+      { "Name": "deviceprotection", "Type": "string" },
+      { "Name": "techsupport", "Type": "string" },
+      { "Name": "streamingtv", "Type": "string" },
+      { "Name": "streamingmovies", "Type": "string" },
+      { "Name": "contract", "Type": "string" },
+      { "Name": "paperlessbilling", "Type": "int" },
+      { "Name": "paymentmethod", "Type": "string" },
+      { "Name": "monthlycharges", "Type": "double" },
+      { "Name": "totalcharges", "Type": "double" },
+      { "Name": "churn", "Type": "int" }
+    ],
+    "Location": "s3://YOUR_BUCKET_NAME/churn-project/processed/",
+    "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
+    "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+    "SerdeInfo": {
+      "SerializationLibrary": "org.apache.hadoop.hive.serde2.OpenCSVSerde",
+      "Parameters": {
+        "separatorChar": ",",
+        "quoteChar": "\"",
+        "escapeChar": "\\"
+      }
+    }
+  }
+}

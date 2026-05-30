@@ -1,0 +1,37 @@
+
+================================================================================Model: Logistic Regression
+ROC-AUC: 0.8416
+
+Confusion Matrix:
+[[747 288]
+ [ 81 293]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.90      0.72      0.80      1035
+           1       0.50      0.78      0.61       374
+
+    accuracy                           0.74      1409
+   macro avg       0.70      0.75      0.71      1409
+weighted avg       0.80      0.74      0.75      1409
+
+
+
+Model: Random Forest
+ROC-AUC: 0.8229
+
+Confusion Matrix:
+[[922 113]
+ [194 180]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.83      0.89      0.86      1035
+           1       0.61      0.48      0.54       374
+
+    accuracy                           0.78      1409
+   macro avg       0.72      0.69      0.70      1409
+weighted avg       0.77      0.78      0.77      1409
+

@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+
+# Local data and generated artifacts
+data/raw/
+data/processed/
+models/
+reports/figures/
+
+# Never commit local AWS credentials
+.aws/
+*.pem
+*.key

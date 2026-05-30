@@ -1,0 +1,20 @@
+Overall churn rate: 26.54%
+
+Churn rate by contract:
+      contract  customers  churn_rate
+Month-to-month       3875    0.427097
+      One year       1473    0.112695
+      Two year       1695    0.028319
+
+Churn rate by internet service:
+internetservice  customers  churn_rate
+    Fiber optic       3096    0.418928
+            DSL       2421    0.189591
+             No       1526    0.074050
+
+Churn rate by payment method:
+            paymentmethod  customers  churn_rate
+         Electronic check       2365    0.452854
+             Mailed check       1612    0.191067
+Bank transfer (automatic)       1544    0.167098
+  Credit card (automatic)       1522    0.152431
