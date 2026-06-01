@@ -1,0 +1,44 @@
+Top Logistic Regression Features Increasing Predicted Churn
+                       feature  coefficient
+   internetservice Fiber optic     0.789640
+       contract Month-to-month     0.720874
+                  totalcharges     0.488658
+           streamingmovies Yes     0.348477
+               streamingtv Yes     0.335619
+paymentmethod Electronic check     0.287754
+             onlinesecurity No     0.262943
+                techsupport No     0.229148
+             multiplelines Yes     0.182129
+              paperlessbilling     0.165454
+
+Top Logistic Regression Features Decreasing Predicted Churn
+                            feature  coefficient
+                             tenure    -1.154248
+                     monthlycharges    -0.713959
+                  contract Two year    -0.711898
+                internetservice DSL    -0.570604
+                 internetservice No    -0.218963
+   onlinebackup No internet service    -0.218963
+    techsupport No internet service    -0.218963
+    streamingtv No internet service    -0.218963
+streamingmovies No internet service    -0.218963
+ onlinesecurity No internet service    -0.218963
+
+Top Random Forest Features
+                       feature  importance
+                  totalcharges    0.148718
+                        tenure    0.131983
+                monthlycharges    0.131778
+       contract Month-to-month    0.079897
+                techsupport No    0.035365
+             contract Two year    0.035123
+             onlinesecurity No    0.033240
+paymentmethod Electronic check    0.028314
+   internetservice Fiber optic    0.024251
+              paperlessbilling    0.022733
+
+Notes
+- Logistic Regression coefficients show direction after preprocessing.
+- Positive coefficients are associated with higher predicted churn.
+- Negative coefficients are associated with lower predicted churn.
+- Random Forest feature importance shows predictive usefulness, not direction.

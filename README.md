@@ -65,11 +65,15 @@ notebooks/
   01_churn_eda_model.ipynb
 reports/
   eda_summary.txt
+  logistic_regression_features.csv
   model_metrics.txt
+  random_forest_features.csv
+  top_features.txt
 src/
   download_data.py
   clean_data.py
   eda.py
+  model_interpretation.py
   train_model.py
 requirements.txt
 ```
@@ -97,6 +101,7 @@ python src/download_data.py
 python src/clean_data.py
 python src/eda.py
 python src/train_model.py
+python src/model_interpretation.py
 ```
 
 The notebook version is here:
@@ -158,6 +163,40 @@ The Logistic Regression model gave better recall for the churn class:
 For this problem, recall is useful because the model is meant to catch customers
 who may churn. Higher recall means fewer churn customers are missed, though it
 also creates more false positives.
+
+## Model Interpretation
+
+I added a simple interpretation step to compare Logistic Regression coefficients
+and Random Forest feature importance.
+
+Generated files:
+
+```text
+reports/logistic_regression_features.csv
+reports/random_forest_features.csv
+reports/top_features.txt
+```
+
+Logistic Regression coefficients are useful for direction:
+
+- positive coefficients are associated with higher predicted churn
+- negative coefficients are associated with lower predicted churn
+
+Random Forest feature importance is useful for ranking predictive features, but
+it does not show whether a feature increases or decreases churn.
+
+Top features from this step:
+
+| feature | interpretation |
+|---|---|
+| tenure | Longer-tenure customers were less likely to be predicted as churners. |
+| contract Month-to-month | Month-to-month contracts were associated with higher predicted churn. |
+| internetservice Fiber optic | Fiber optic customers had higher predicted churn in this model. |
+| contract Two year | Two-year contracts were associated with lower predicted churn. |
+| paymentmethod Electronic check | Electronic check appeared as a useful churn-related feature. |
+
+These are model interpretation results, not causal claims. Some coefficients can
+change when correlated features are included together.
 
 ## AWS Part
 
