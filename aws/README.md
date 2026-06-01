@@ -48,6 +48,24 @@ The table points to:
 s3://<bucket-name>/churn-project/processed/
 ```
 
+The customer risk score schema is defined in:
+
+```text
+aws/glue_risk_scores_table_input.json
+```
+
+Risk score table name:
+
+```text
+churn_project.customer_churn_scores
+```
+
+The risk score table points to:
+
+```text
+s3://<bucket-name>/churn-project/scores/
+```
+
 ## Athena Query
 
 The main query used for checking churn rate by contract:
@@ -70,10 +88,32 @@ Result:
 | One year | 1,473 | 0.1127 |
 | Two year | 1,695 | 0.0283 |
 
+Risk score query:
+
+```sql
+SELECT
+  risk_level,
+  COUNT(*) AS customers,
+  ROUND(AVG(churn_probability), 4) AS avg_churn_probability,
+  ROUND(AVG(actual_churn), 4) AS actual_churn_rate
+FROM churn_project.customer_churn_scores
+GROUP BY risk_level;
+```
+
+Result:
+
+| risk_level | customers | avg_churn_probability | actual_churn_rate |
+|---|---:|---:|---:|
+| High | 2,090 | 0.7932 | 0.5919 |
+| Medium | 1,699 | 0.4955 | 0.2678 |
+| Low | 3,254 | 0.1282 | 0.0544 |
+
 ## Files
 
 - `athena_setup.sql`: SQL notes for the Athena analysis
 - `glue_table_input.json`: Glue table schema
+- `glue_risk_scores_table_input.json`: Glue table schema for model scores
+- `risk_scores_queries.sql`: Athena queries for model score analysis
 
 ## Security Notes
 

@@ -276,6 +276,9 @@ After cleaning the data locally, I uploaded the raw and processed CSV files to
 Amazon S3. I then registered the cleaned CSV as a table in AWS Glue Data Catalog
 and queried it in Amazon Athena.
 
+I also uploaded the customer risk score output to S3 and registered it as a
+second Glue/Athena table. This lets me query model score groups with SQL.
+
 AWS services used:
 
 - Amazon S3
@@ -287,6 +290,7 @@ The public repo uses placeholder paths instead of my exact AWS resource names:
 ```text
 s3://<bucket-name>/churn-project/raw/Telco-Customer-Churn.csv
 s3://<bucket-name>/churn-project/processed/telco_churn_clean.csv
+s3://<bucket-name>/churn-project/scores/customer_churn_scores.csv
 ```
 
 Example Athena query:
@@ -303,6 +307,33 @@ ORDER BY churn_rate DESC;
 
 The Athena result matched the local pandas analysis for churn rate by contract.
 
+Risk score Athena query:
+
+```sql
+SELECT
+  risk_level,
+  COUNT(*) AS customers,
+  ROUND(AVG(churn_probability), 4) AS avg_churn_probability,
+  ROUND(AVG(actual_churn), 4) AS actual_churn_rate
+FROM churn_project.customer_churn_scores
+GROUP BY risk_level
+ORDER BY
+  CASE risk_level
+    WHEN 'High' THEN 1
+    WHEN 'Medium' THEN 2
+    WHEN 'Low' THEN 3
+    ELSE 4
+  END;
+```
+
+Risk score Athena result:
+
+| risk_level | customers | avg_churn_probability | actual_churn_rate |
+|---|---:|---:|---:|
+| High | 2,090 | 0.7932 | 0.5919 |
+| Medium | 1,699 | 0.4955 | 0.2678 |
+| Low | 3,254 | 0.1282 | 0.0544 |
+
 ## Notes
 
 This was mainly a learning project. I focused on getting a complete workflow
@@ -312,6 +343,5 @@ AWS, define a table, and query it with SQL.
 Things I would improve next:
 
 - Add feature importance or coefficient interpretation.
-- Save model predictions as a new CSV and upload them to S3.
-- Add a dashboard in QuickSight, Tableau, or Power BI.
+- Add more dashboard filters, such as contract type and internet service.
 - Replace broad AWS learning permissions with a stricter IAM policy.
