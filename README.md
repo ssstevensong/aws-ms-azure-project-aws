@@ -68,12 +68,14 @@ reports/
   logistic_regression_features.csv
   model_metrics.txt
   random_forest_features.csv
+  risk_score_summary.txt
   top_features.txt
 src/
   download_data.py
   clean_data.py
   eda.py
   model_interpretation.py
+  score_customers.py
   train_model.py
 requirements.txt
 ```
@@ -102,6 +104,7 @@ python src/clean_data.py
 python src/eda.py
 python src/train_model.py
 python src/model_interpretation.py
+python src/score_customers.py
 ```
 
 The notebook version is here:
@@ -197,6 +200,40 @@ Top features from this step:
 
 These are model interpretation results, not causal claims. Some coefficients can
 change when correlated features are included together.
+
+## Customer Risk Scores
+
+I used the trained Logistic Regression model to create customer-level churn risk
+scores. The output file is generated locally and excluded from Git because it is
+a processed data file:
+
+```text
+data/processed/customer_churn_scores.csv
+```
+
+The scoring script also writes a small summary:
+
+```text
+reports/risk_score_summary.txt
+```
+
+Risk levels are based on predicted churn probability:
+
+| risk_level | definition |
+|---|---|
+| High | churn_probability >= 0.65 |
+| Medium | 0.35 <= churn_probability < 0.65 |
+| Low | churn_probability < 0.35 |
+
+Risk score summary:
+
+| risk_level | customers | avg_churn_probability | actual_churn_rate |
+|---|---:|---:|---:|
+| High | 2,090 | 0.7932 | 0.5919 |
+| Medium | 1,699 | 0.4955 | 0.2678 |
+| Low | 3,254 | 0.1282 | 0.0544 |
+
+This file will be used for the Tableau dashboard.
 
 ## AWS Part
 
